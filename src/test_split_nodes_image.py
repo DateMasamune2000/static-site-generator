@@ -1,0 +1,56 @@
+import unittest
+
+from textnode import TextNode, TextType
+from convert import split_nodes_image
+
+class TestSplitNodesImage(unittest.TestCase):
+	def test_plain(self):
+		text = TextNode(text_type=TextType.PLAIN, text="hello, world!")
+		nodes = split_nodes_image([text])
+		self.assertEqual(nodes, [TextNode("hello, world!", TextType.PLAIN)])
+
+	def test_one_image(self):
+		# one image with **no** text following it
+		text = TextNode(text_type=TextType.PLAIN, text="hello, ![world](https://world.com)")
+		nodes = split_nodes_image([text])
+		self.assertEqual(nodes, [
+			TextNode("hello, ", TextType.PLAIN),
+			TextNode("world", TextType.IMAGE, "https://world.com")
+		])
+
+		# one image with text following it
+		text = TextNode(text_type=TextType.PLAIN, text="hello, ![world](https://world.com)!")
+		nodes = split_nodes_image([text])
+		self.assertEqual(nodes, [
+			TextNode("hello, ", TextType.PLAIN),
+			TextNode("world", TextType.IMAGE, "https://world.com"),
+			TextNode("!", TextType.PLAIN)
+		])
+
+	def test_multiple_images(self):
+		# multiple images with no text preceding first image
+		text = TextNode(
+			text_type=TextType.PLAIN,
+			text="![hello](https://hello.com), ![world](https://world.com)!"
+		)
+		nodes = split_nodes_image([text])
+		self.assertEqual(nodes, [
+			TextNode("hello", TextType.IMAGE, "https://hello.com"),
+			TextNode(", ", TextType.PLAIN),
+			TextNode("world", TextType.IMAGE, "https://world.com"),
+			TextNode("!", TextType.PLAIN)
+		])
+
+		# multiple images with no text following last image
+		text = TextNode(
+			text_type=TextType.PLAIN,
+			text="B![hello](https://hello.com), ![world](https://world.com)"
+		)
+		nodes = split_nodes_image([text])
+		self.assertEqual(nodes, [
+			TextNode("B", TextType.PLAIN),
+			TextNode("hello", TextType.IMAGE, "https://hello.com"),
+			TextNode(", ", TextType.PLAIN),
+			TextNode("world", TextType.IMAGE, "https://world.com")
+		])
+
