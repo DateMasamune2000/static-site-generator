@@ -1,7 +1,7 @@
 import unittest
 
 from textnode import TextNode, TextType
-from convert import split_nodes_link
+from parse import split_nodes_link
 
 class TestSplitNodesLink(unittest.TestCase):
 	def test_plain(self):

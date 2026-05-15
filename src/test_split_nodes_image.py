@@ -1,7 +1,7 @@
 import unittest
 
 from textnode import TextNode, TextType
-from convert import split_nodes_image
+from parse import split_nodes_image
 
 class TestSplitNodesImage(unittest.TestCase):
 	def test_plain(self):
