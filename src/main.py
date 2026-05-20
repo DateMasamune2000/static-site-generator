@@ -1,4 +1,3 @@
-from textnode import TextType, TextNode
+from copy import copy_files
 
-a = TextNode("This is some anchor text", TextType.LINK, "https://www.boot.dev")
-print(a)
+copy_files("./static", "./public")
