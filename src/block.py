@@ -17,7 +17,7 @@ def block_to_block_type(block):
     if len(block_lines) == 1 and g_heading_block.match(block):
         return BlockType.HEADING
 
-    if block[0:4] == "```\n" and block[-5:] == "\n```\n":
+    if block.startswith("```\n") and block.endswith("\n```"):
         return BlockType.CODE
 
     is_quote = True

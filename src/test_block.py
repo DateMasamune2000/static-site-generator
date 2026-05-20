@@ -27,8 +27,7 @@ some text
     def test_code(self):
         block = """```
 this is some code
-```
-"""
+```"""
         self.assertEqual(block_to_block_type(block), BlockType.CODE)
 
         block = """```
