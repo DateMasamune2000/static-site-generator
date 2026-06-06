@@ -8,6 +8,21 @@ text_node_delims = {
     TextType.CODE: '`',
 }
 
+whitespace_chars = [ " ", "\n", "\r", "\t" ]
+
+def extract_title(markdown):
+    for i in range(len(markdown)):
+        c = markdown[i]
+        if c in whitespace_chars:
+            continue
+        elif c != "#":
+            raise Exception("Markdown document has no title")
+        else:
+            j = i
+            while j < len(markdown) and markdown[j] != "\n":
+                j += 1
+            return markdown[i+1:j].strip()
+
 def markdown_to_blocks(markdown):
     blocks = []
     for block in markdown.strip().split("\n\n"):
