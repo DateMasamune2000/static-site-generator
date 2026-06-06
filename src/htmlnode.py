@@ -28,9 +28,9 @@ class LeafNode(HTMLNode):
             return self.value
         else:
             if self.props is None:
-                return f"<{self.tag}>{self.value}</{self.tag}>"
+                return f"<{self.tag}>{self.value}</{self.tag}>\n"
             else:
-                return f"<{self.tag} {self.props_to_html()}>{self.value}</{self.tag}>"
+                return f"<{self.tag} {self.props_to_html()}>{self.value}</{self.tag}>\n"
                 
     def __repr__(self):
         return f'("tag":{self.tag},"value":{self.value},"props":{self.props})'
@@ -58,6 +58,6 @@ class ParentNode(HTMLNode):
         for child in self.children:
             string.append(child.to_html())
             
-        string.append(f"</{self.tag}>")
+        string.append(f"</{self.tag}>\n")
             
         return "".join(string)
