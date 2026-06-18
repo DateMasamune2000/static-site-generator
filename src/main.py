@@ -1,6 +1,9 @@
 from copy import copy_files
 from generate import generate_pages_recursive
 import os
+import sys
 
-copy_files("./static", "./public")
-generate_pages_recursive("content", "template.html", "public")
+basepath = sys.argv[1]
+
+copy_files("./static", "./docs")
+generate_pages_recursive(basepath, "content", "template.html", "docs")
