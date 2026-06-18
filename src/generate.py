@@ -37,5 +37,4 @@ def generate_path(basepath, from_path, template_path, dest_path):
     contents_template = contents_template.replace("src=\"/", f"src=\"{basepath}")
     
     with open(dest_path, "w") as dest:
-        x = ''.join([contents_from_html, contents_template])
-        dest.write(x)
+        dest.write(contents_template)
